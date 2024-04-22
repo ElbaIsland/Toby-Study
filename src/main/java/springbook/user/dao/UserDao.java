@@ -9,11 +9,17 @@ import java.sql.SQLException;
 import springbook.user.domain.User;
 
 public class UserDao {
+	
+	private SimpleConnectionMaker connectionMaker;
+	
+	public UserDao() {
+		connectionMaker = new SimpleConnectionMaker(); // 한번만 만들어 인스턴스 변수에 저장한 뒤 아래 메소드에서 사용
+	}
+	
 
     public void add(User user) throws ClassNotFoundException, SQLException {
     	
-    	Class.forName("com.mysql.cj.jdbc.Driver");
-    	Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/toby_spring", "root", "0389");
+    	Connection connection = connectionMaker.makeNewConnection();
     	
         String sql = "insert into User(ID, PASSWORD, USER_NAME) values(?,?,?)";
 
@@ -27,9 +33,8 @@ public class UserDao {
     }
     
     public void delete(User user) throws ClassNotFoundException, SQLException {
-    	
-    	Class.forName("com.mysql.cj.jdbc.Driver");
-    	Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/toby_spring", "root", "0389");
+
+    	Connection connection = connectionMaker.makeNewConnection();
     	
         String sql = "delete from User where ID = ?";
 
@@ -42,8 +47,7 @@ public class UserDao {
 
     public User get(String id) throws ClassNotFoundException, SQLException {
 
-    	Class.forName("com.mysql.cj.jdbc.Driver");
-    	Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/toby_spring", "root", "0389");  	
+    	Connection connection = connectionMaker.makeNewConnection();
     	
         String sql = "select ID, PASSWORD, USER_NAME from User where id = ?";
         
