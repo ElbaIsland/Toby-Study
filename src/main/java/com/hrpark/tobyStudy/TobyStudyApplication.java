@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import springbook.user.dao.NConnectionMaker;
+import springbook.user.dao.SimpleConnectionMaker;
 import springbook.user.dao.UserDao;
 import springbook.user.domain.User;
 
@@ -12,9 +14,11 @@ import springbook.user.domain.User;
 public class TobyStudyApplication {
 
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
-		SpringApplication.run(TobyStudyApplication.class, args);
 		
-		UserDao dao = new UserDao();
+		SpringApplication.run(TobyStudyApplication.class, args);
+
+		SimpleConnectionMaker selectedConnectionMaker = new NConnectionMaker();
+		UserDao dao = new UserDao(selectedConnectionMaker);
 		
 		User user = new User();
 		user.setId("hrpark");
