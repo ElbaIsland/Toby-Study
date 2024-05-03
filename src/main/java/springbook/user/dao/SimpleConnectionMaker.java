@@ -12,5 +12,4 @@ public interface SimpleConnectionMaker {
 
     public Connection makeConnection() throws SQLException, ClassNotFoundException; 
 
-
 }
