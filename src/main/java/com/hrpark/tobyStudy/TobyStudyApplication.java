@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import springbook.user.dao.DaoFactory;
 import springbook.user.dao.NConnectionMaker;
 import springbook.user.dao.SimpleConnectionMaker;
 import springbook.user.dao.UserDao;
@@ -17,8 +18,7 @@ public class TobyStudyApplication {
 		
 		SpringApplication.run(TobyStudyApplication.class, args);
 
-		SimpleConnectionMaker selectedConnectionMaker = new NConnectionMaker();
-		UserDao dao = new UserDao(selectedConnectionMaker);
+		UserDao dao = new DaoFactory().userDao();	// 팩토리를 사용하도록 수정, test코드에서 ConnectionMaker 관련 코드 삭제
 		
 		User user = new User();
 		user.setId("hrpark");
