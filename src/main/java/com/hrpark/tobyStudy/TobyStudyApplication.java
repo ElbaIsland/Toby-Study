@@ -4,6 +4,8 @@ import java.sql.SQLException;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import springbook.user.dao.DaoFactory;
 import springbook.user.dao.NConnectionMaker;
@@ -18,7 +20,9 @@ public class TobyStudyApplication {
 		
 		SpringApplication.run(TobyStudyApplication.class, args);
 
-		UserDao dao = new DaoFactory().userDao();	// 팩토리를 사용하도록 수정, test코드에서 ConnectionMaker 관련 코드 삭제
+		ApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory.class);
+		
+		UserDao dao = context.getBean("userDao", UserDao.class);
 		
 		User user = new User();
 		user.setId("hrpark");

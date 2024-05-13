@@ -6,11 +6,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
 import springbook.user.domain.User;
 
+@Configuration
 public class DaoFactory {
 
-	// 팩토리의 메소드는 UserDao 타입의 오브젝트를 어떻게 만들고 준비시킬지 결정한다.
+	@Bean
     public UserDao userDao() {    	
     	return new UserDao(setConnectionMaker());
     }
@@ -23,6 +27,7 @@ public class DaoFactory {
     	return new UserDao(setConnectionMaker());
     }    
     
+    @Bean
     public SimpleConnectionMaker setConnectionMaker() {
     	return new NConnectionMaker();
     }
